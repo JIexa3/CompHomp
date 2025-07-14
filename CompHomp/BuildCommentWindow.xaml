@@ -1,0 +1,70 @@
+<Window x:Class="CompHomp.BuildCommentWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Добавить комментарий" Height="300" Width="500"
+        WindowStartupLocation="CenterOwner"
+        Background="#FF1A1A1A">
+    <Window.Resources>
+        <Style x:Key="CommentTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Background" Value="#FF2D2D2D"/>
+            <Setter Property="Foreground" Value="#FFE0E0E0"/>
+            <Setter Property="BorderBrush" Value="#FF404040"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="10">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    
+    <Border Margin="20" 
+            Background="#FF2D2D2D" 
+            CornerRadius="15" 
+            BorderBrush="#FF404040" 
+            BorderThickness="1">
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Оставьте свой комментарий"
+                       Foreground="#FFE0E0E0"
+                       FontSize="18"
+                       FontWeight="SemiBold"
+                       Margin="0,0,0,15"/>
+
+            <TextBox x:Name="CommentTextBox" 
+                     Grid.Row="1"
+                     TextWrapping="Wrap" 
+                     AcceptsReturn="True"
+                     Style="{StaticResource CommentTextBoxStyle}"
+                     FontSize="14"/>
+
+            <StackPanel Grid.Row="2" 
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        Margin="0,15,0,0">
+                <Button Content="Отмена"
+                        Style="{DynamicResource RoundedButton}"
+                        Click="CancelButton_Click"
+                        Width="100"
+                        Margin="0,0,10,0"/>
+                <Button Content="Добавить"
+                        Style="{DynamicResource RoundedButton}"
+                        Click="AddComment_Click"
+                        Width="100"/>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>

@@ -1,0 +1,80 @@
+<Window x:Class="CompHomp.BuildsListWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:converters="clr-namespace:CompHomp.Converters"
+        Title="Список сборок" 
+        Height="600" 
+        Width="1000"
+        WindowStartupLocation="CenterScreen"
+        Background="#FF1E1E1E">
+    <Window.Resources>
+        <converters:BuildStatusConverter x:Key="StatusConverter"/>
+        
+        <Style x:Key="AdminActionButton" TargetType="Button">
+            <Setter Property="Background" Value="#FF363636"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Padding" Value="15,10"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="MinWidth" Value="150"/>
+            <Setter Property="Width" Value="180"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="5"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FF404040"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#FF505050"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Список сборок" 
+                   Foreground="White" 
+                   FontSize="24" 
+                   HorizontalAlignment="Center" 
+                   Margin="0,0,0,20"/>
+
+        <DataGrid x:Name="BuildsDataGrid" 
+                  Grid.Row="1" 
+                  AutoGenerateColumns="False"
+                  Background="#FF2D2D2D"
+                 Foreground="Black"
+                  GridLinesVisibility="None"
+                  HeadersVisibility="Column">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="Auto"/>
+                <DataGridTextColumn Header="Название" Binding="{Binding Name}" Width="*"/>
+                <DataGridTextColumn Header="Автор" Binding="{Binding User.Login}" Width="Auto"/>
+                <DataGridTextColumn Header="Цена" Binding="{Binding BasePrice, StringFormat=\{0:N2\} ₽}" Width="Auto"/>
+                <DataGridTextColumn Header="Статус" Binding="{Binding Status, Converter={StaticResource StatusConverter}}" Width="Auto"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
+            <Button x:Name="RefreshButton" Content="Обновить" Style="{StaticResource AdminActionButton}" Margin="0,0,10,0"/>
+            <Button x:Name="DeleteBuildButton" Content="Удалить сборку" Style="{StaticResource AdminActionButton}" Margin="0,0,10,0"/>
+            <Button x:Name="EditBuildButton" Content="Редактировать" Style="{StaticResource AdminActionButton}"/>
+        </StackPanel>
+    </Grid>
+</Window>

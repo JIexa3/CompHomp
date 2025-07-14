@@ -1,0 +1,75 @@
+<Window x:Class="CompHomp.BlockUsersWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:converters="clr-namespace:CompHomp.Converters"
+        Title="Блокировка пользователей" 
+        Height="600" 
+        Width="800"
+        WindowStartupLocation="CenterScreen"
+        Background="#FF1E1E1E">
+    <Window.Resources>
+        <converters:UserRoleConverter x:Key="UserRoleConverter"/>
+        <Style x:Key="AdminActionButton" TargetType="Button">
+            <Setter Property="Background" Value="#FF363636"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Padding" Value="15,5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="#FF4A4A4A"
+                                BorderThickness="1"
+                                CornerRadius="3">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"
+                                            Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FF404040"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Блокировка пользователей" 
+                   Foreground="White" 
+                   FontSize="24" 
+                   HorizontalAlignment="Center" 
+                   Margin="0,0,0,20"/>
+
+        <DataGrid x:Name="UsersDataGrid" 
+                  Grid.Row="1" 
+                  AutoGenerateColumns="False" 
+                  Background="#FF2D2D2D" 
+                  Foreground="Black"
+                  CanUserAddRows="False" 
+                  CanUserDeleteRows="False" 
+                  SelectionMode="Extended">
+            <DataGrid.Columns>
+                <DataGridCheckBoxColumn Header="Выбрать" Binding="{Binding IsSelected}"/>
+                <DataGridTextColumn Header="Имя пользователя" Binding="{Binding Username}"/>
+                <DataGridTextColumn Header="Email" Binding="{Binding Email}"/>
+                <DataGridTextColumn Header="Роль" Binding="{Binding Role, Converter={StaticResource UserRoleConverter}}"/>
+                <DataGridCheckBoxColumn Header="Активен" Binding="{Binding IsActive, Mode=TwoWay}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
+            <Button x:Name="BlockSelectedButton" Content="Заблокировать выбранных" Style="{StaticResource AdminActionButton}" Margin="0,0,10,0"/>
+            <Button x:Name="UnblockSelectedButton" Content="Разблокировать выбранных" Style="{StaticResource AdminActionButton}" Margin="0,0,10,0"/>
+            <Button x:Name="CancelButton" Content="Отмена" Style="{StaticResource AdminActionButton}"/>
+        </StackPanel>
+    </Grid>
+</Window>

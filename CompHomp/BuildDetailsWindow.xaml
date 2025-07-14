@@ -1,0 +1,288 @@
+<Window x:Class="CompHomp.BuildDetailsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Детали сборки" 
+        Height="600" 
+        Width="800"
+        WindowStartupLocation="CenterScreen"
+        Background="#FF1A1A1A">
+
+    <Window.Resources>
+        <!-- Темный стиль для ComboBox -->
+        <Style x:Key="DarkComboBoxStyle" TargetType="{x:Type ComboBox}">
+            <Setter Property="Background" Value="#1A1A1A"/>
+            <Setter Property="BorderBrush" Value="#333333"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ComboBox}">
+                        <Grid>
+                            <ToggleButton 
+                                Name="ToggleButton"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                Background="{TemplateBinding Background}">
+                                <ContentPresenter 
+                                    Content="{TemplateBinding SelectionBoxItem}"
+                                    Margin="3"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Left"/>
+                            </ToggleButton>
+                            <Popup 
+                                Name="Popup"
+                                Placement="Bottom"
+                                IsOpen="{TemplateBinding IsDropDownOpen}"
+                                AllowsTransparency="True"
+                                Focusable="False"
+                                PopupAnimation="Slide">
+                                <Grid 
+                                    Name="DropDown"
+                                    SnapsToDevicePixels="True"
+                                    MinWidth="{TemplateBinding ActualWidth}"
+                                    MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                    <Border 
+                                        Background="#1A1A1A"
+                                        BorderBrush="#333333"
+                                        BorderThickness="1">
+                                        <ScrollViewer>
+                                            <ItemsPresenter 
+                                                KeyboardNavigation.DirectionalNavigation="Contained"/>
+                                        </ScrollViewer>
+                                    </Border>
+                                </Grid>
+                            </Popup>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Стиль для темного ScrollViewer -->
+        <Style x:Key="CustomScrollViewer" TargetType="{x:Type ScrollViewer}">
+            <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Background="Transparent" Grid.ColumnSpan="2"/>
+                            <ScrollContentPresenter 
+                                Grid.Column="0"
+                                CanContentScroll="{TemplateBinding CanContentScroll}"
+                                Margin="{TemplateBinding Padding}"/>
+                            <ScrollBar 
+                                Name="PART_VerticalScrollBar"
+                                Grid.Column="1"
+                                Orientation="Vertical"
+                                Maximum="{TemplateBinding ScrollableHeight}"
+                                ViewportSize="{TemplateBinding ViewportHeight}"
+                                Value="{TemplateBinding VerticalOffset}"
+                                Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
+                                Background="#1A1A1A"
+                                Foreground="#444444"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Стиль для GroupBox -->
+        <Style x:Key="CustomGroupBox" TargetType="{x:Type GroupBox}">
+            <Setter Property="BorderBrush" Value="#333333"/>
+            <Setter Property="Foreground" Value="#AAAAAA"/>
+            <Setter Property="Padding" Value="8"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+        </Style>
+
+        <!-- Стиль для кнопки -->
+        <Style x:Key="ButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="#FF404040"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="20,10"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FF505050"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Заголовок -->
+        <TextBlock Text="Детали сборки"
+                   Foreground="White"
+                   FontSize="22"
+                   HorizontalAlignment="Center"
+                   Margin="0,0,0,15"/>
+
+        <!-- Основной контент с прокруткой -->
+        <ScrollViewer Grid.Row="1" 
+                      Style="{StaticResource CustomScrollViewer}"
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled"
+                      Margin="0,0">
+            <StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="250"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="250"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Левая панель - Компоненты -->
+                    <StackPanel Grid.Column="0" Margin="0,0,15,0">
+                        <!-- Процессор -->
+                        <GroupBox Header="Процессор" Style="{StaticResource CustomGroupBox}" Margin="0,0,0,8">
+                            <TextBlock x:Name="CpuText" 
+                                       Foreground="White"
+                                       TextWrapping="Wrap"/>
+                        </GroupBox>
+
+                        <!-- Видеокарта -->
+                        <GroupBox Header="Видеокарта" Style="{StaticResource CustomGroupBox}" Margin="0,0,0,8">
+                            <TextBlock x:Name="GpuText" 
+                                       Foreground="White"
+                                       TextWrapping="Wrap"/>
+                        </GroupBox>
+
+                        <!-- Оперативная память -->
+                        <GroupBox Header="Оперативная память" Style="{StaticResource CustomGroupBox}" Margin="0,0,0,8">
+                            <TextBlock x:Name="RamText"
+                                       Foreground="White"
+                                       TextWrapping="Wrap"/>
+                        </GroupBox>
+
+                        <!-- Материнская плата -->
+                        <GroupBox Header="Материнская плата" Style="{StaticResource CustomGroupBox}" Margin="0,0,0,8">
+                            <TextBlock x:Name="MotherboardText"
+                                       Foreground="White"
+                                       TextWrapping="Wrap"/>
+                        </GroupBox>
+                    </StackPanel>
+
+                    <!-- Центральная панель - Изображение и название -->
+                    <Grid Grid.Column="1" Margin="10,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock x:Name="BuildNameText"
+                                   Grid.Row="0"
+                                   Foreground="White"
+                                   FontSize="18"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,0,0,15"/>
+
+                        <Border Grid.Row="1"
+                                BorderBrush="#333333" 
+                                BorderThickness="1" 
+                                CornerRadius="8"
+                                Background="#1A1A1A"
+                                Width="300"
+                                Height="300"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
+                            <Image x:Name="BuildImage"
+                                   Stretch="Uniform"
+                                   Margin="2"
+                                   RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </Border>
+
+                        <TextBlock x:Name="DescriptionText"
+                                   Grid.Row="2"
+                                   Foreground="White"
+                                   TextWrapping="Wrap"
+                                   TextAlignment="Center"
+                                   Margin="0,15,0,0"
+                                   MaxWidth="500"/>
+                    </Grid>
+
+                    <!-- Правая панель - Дополнительная информация -->
+                    <StackPanel Grid.Column="2" Margin="15,0,0,0">
+                        <!-- Информация об авторе -->
+                        <GroupBox Header="Информация" Style="{StaticResource CustomGroupBox}" Margin="0,0,0,8">
+                            <StackPanel Margin="8,5">
+                                <WrapPanel Margin="0,0,0,5">
+                                    <TextBlock Text="Автор: " 
+                                             Foreground="#AAAAAA"/>
+                                    <TextBlock x:Name="AuthorText"
+                                             Foreground="White"/>
+                                </WrapPanel>
+
+                                <WrapPanel Margin="0,0,0,5">
+                                    <TextBlock Text="Дата: " 
+                                             Foreground="#AAAAAA"/>
+                                    <TextBlock x:Name="CreationDateText"
+                                             Foreground="White"/>
+                                </WrapPanel>
+
+                                <WrapPanel>
+                                    <TextBlock Text="Стоимость: " 
+                                             Foreground="#AAAAAA"/>
+                                    <TextBlock x:Name="TotalPriceText" 
+                                             Foreground="#00FF00"
+                                             FontWeight="Bold"
+                                             TextWrapping="Wrap"
+                                             FontSize="14"/>
+                                </WrapPanel>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <!-- Накопитель -->
+                        <GroupBox Header="Накопитель" Style="{StaticResource CustomGroupBox}" Margin="0,0,0,8">
+                            <TextBlock x:Name="StorageText"
+                                       Foreground="White"
+                                       TextWrapping="Wrap"/>
+                        </GroupBox>
+
+                        <!-- Блок питания -->
+                        <GroupBox Header="Блок питания" Style="{StaticResource CustomGroupBox}" Margin="0,0,0,8">
+                            <TextBlock x:Name="PsuText"
+                                       Foreground="White"
+                                       TextWrapping="Wrap"/>
+                        </GroupBox>
+
+                        <!-- Корпус -->
+                        <GroupBox Header="Корпус" Style="{StaticResource CustomGroupBox}" Margin="0,0,0,8">
+                            <TextBlock x:Name="CaseText"
+                                       Foreground="White"
+                                       TextWrapping="Wrap"/>
+                        </GroupBox>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Кнопка закрытия -->
+        <Button Grid.Row="2" 
+                Content="Закрыть" 
+                Click="CloseButton_Click"
+                Style="{StaticResource ButtonStyle}"
+                HorizontalAlignment="Right"
+                Margin="0,11,-10,-10" Width="60"/>
+    </Grid>
+</Window>

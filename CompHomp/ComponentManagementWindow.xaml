@@ -1,0 +1,116 @@
+<Window x:Class="CompHomp.ComponentManagementWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CompHomp"
+        mc:Ignorable="d"
+        Title="Управление компонентами" 
+        Height="800" 
+        Width="1200"
+        WindowStartupLocation="CenterScreen"
+        Background="#FF1E1E1E">
+    
+    <Window.Resources>
+        <Style x:Key="AdminTileButton" TargetType="Button">
+            <Setter Property="Background" Value="#FF363636"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Padding" Value="20,15"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Width" Value="180"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="5"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FF404040"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#FF505050"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Заголовок -->
+        <Border Grid.Row="0" Background="#FF2D2D2D" Padding="20">
+            <TextBlock Text="Управление компонентами" Foreground="White" FontSize="24" HorizontalAlignment="Center"/>
+        </Border>
+
+        <Grid Grid.Row="1" Margin="20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Панель выбора типа компонента -->
+            <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                <TextBlock Text="Тип компонента" Foreground="White" FontSize="18" Margin="0,0,0,10"/>
+                <ListBox x:Name="ComponentTypeList" Background="#FF2D2D2D" Foreground="White" BorderThickness="0">
+                    <ListBoxItem Content="Процессоры"/>
+                    <ListBoxItem Content="Видеокарты"/>
+                    <ListBoxItem Content="Материнские платы"/>
+                    <ListBoxItem Content="Оперативная память"/>
+                    <ListBoxItem Content="Накопители"/>
+                    <ListBoxItem Content="Блоки питания"/>
+                    <ListBoxItem Content="Корпуса"/>
+                </ListBox>
+            </StackPanel>
+
+            <!-- Панель со списком компонентов -->
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Панель инструментов -->
+                <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,20">
+                    <Button x:Name="AddButton" Content="Добавить" Style="{StaticResource AdminTileButton}" Click="AddButton_Click" Height="48"/>
+                    <Button x:Name="EditButton" Content="Редактировать" Style="{StaticResource AdminTileButton}" Click="EditButton_Click" Height="48"/>
+                    <Button x:Name="DeleteButton" Content="Удалить" Style="{StaticResource AdminTileButton}" Click="DeleteButton_Click" Height="48"/>
+                </StackPanel>
+
+                <!-- Таблица компонентов -->
+                <DataGrid x:Name="ComponentsGrid" 
+                          Grid.Row="1" 
+                          AutoGenerateColumns="False"
+                          Background="#FF2D2D2D"
+                          Foreground="White"
+                          BorderThickness="1"
+                          BorderBrush="#FF3E3E3E"
+                          RowBackground="#FF2D2D2D"
+                          AlternatingRowBackground="#FF3E3E3E"
+                          CanUserAddRows="False"
+                          SelectionMode="Single"
+                          SelectionChanged="ComponentsGrid_SelectionChanged">
+                    <DataGrid.Resources>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="#FF2D2D2D"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="Padding" Value="10"/>
+                        </Style>
+                    </DataGrid.Resources>
+                </DataGrid>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

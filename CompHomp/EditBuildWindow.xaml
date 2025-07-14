@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window x:Class="CompHomp.EditBuildWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:converters="clr-namespace:CompHomp.Converters"
+        Title="Редактирование сборки" 
+        Height="650" 
+        Width="800"
+        WindowStartupLocation="CenterScreen"
+        Background="#FF1E1E1E">
+    <Window.Resources>
+        <converters:BuildStatusConverter x:Key="StatusConverter"/>
+        <Style x:Key="AdminActionButton" TargetType="Button">
+            <Setter Property="Background" Value="#FF363636"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Padding" Value="15,10"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="MinWidth" Value="120"/>
+            <Setter Property="Width" Value="180"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="5"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FF404040"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#FF505050"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Редактирование сборки" 
+                   Foreground="White" 
+                   FontSize="24" 
+                   HorizontalAlignment="Center" 
+                   Margin="0,0,0,20"/>
+
+        <StackPanel Grid.Row="1" >
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <TextBlock Text="Название:" Width="150" Foreground="White" VerticalAlignment="Center"/>
+                <TextBox x:Name="txtName" Width="500" Background="#FF2D2D2D" Foreground="White"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <TextBlock Text="ЦП (CPU):" Width="150" Foreground="White" VerticalAlignment="Center"/>
+                <ComboBox x:Name="CpuComboBox" Width="500" Background="#FF2D2D2D" Foreground="Black" 
+                          DisplayMemberPath="Name" SelectedValuePath="Id"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <TextBlock Text="Видеокарта (GPU):" Width="150" Foreground="White" VerticalAlignment="Center"/>
+                <ComboBox x:Name="GpuComboBox" Width="500" Background="#FF2D2D2D" Foreground="Black" 
+                          DisplayMemberPath="Name" SelectedValuePath="Id"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <TextBlock Text="Материнская плата:" Width="150" Foreground="White" VerticalAlignment="Center"/>
+                <ComboBox x:Name="MotherboardComboBox" Width="500" Background="#FF2D2D2D" Foreground="Black" 
+                          DisplayMemberPath="Name" SelectedValuePath="Id"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <TextBlock Text="Оперативная память:" Width="150" Foreground="White" VerticalAlignment="Center"/>
+                <ComboBox x:Name="RamComboBox" Width="500" Background="#FF2D2D2D" Foreground="Black" 
+                          DisplayMemberPath="Name" SelectedValuePath="Id"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <TextBlock Text="Накопитель:" Width="150" Foreground="White" VerticalAlignment="Center"/>
+                <ComboBox x:Name="StorageComboBox" Width="500" Background="#FF2D2D2D" Foreground="Black" 
+                          DisplayMemberPath="Name" SelectedValuePath="Id"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <TextBlock Text="Блок питания:" Width="150" Foreground="White" VerticalAlignment="Center"/>
+                <ComboBox x:Name="PsuComboBox" Width="500" Background="#FF2D2D2D" Foreground="Black" 
+                          DisplayMemberPath="Name" SelectedValuePath="Id"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <TextBlock Text="Корпус:" Width="150" Foreground="White" VerticalAlignment="Center"/>
+                <ComboBox x:Name="CaseComboBox" Width="500" Background="#FF2D2D2D" Foreground="Black" 
+                          DisplayMemberPath="Name" SelectedValuePath="Id"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <TextBlock Text="Базовая цена:" Width="150" Foreground="White" VerticalAlignment="Center"/>
+                <TextBox x:Name="txtBasePrice" Width="500" Background="#FF2D2D2D" Foreground="White"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <TextBlock Text="Статус:" Width="150" Foreground="White" VerticalAlignment="Center"/>
+                <ComboBox x:Name="cmbStatus" Width="500" Background="#FF2D2D2D" Foreground="Black"
+                         ItemsSource="{Binding Source={StaticResource StatusConverter}, Path=StatusTranslations}"
+                         DisplayMemberPath="Value"
+                         SelectedValuePath="Key"
+                         SelectedValue="{Binding Status, Mode=TwoWay}"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <TextBlock Text="Описание:" Width="150" Foreground="White" VerticalAlignment="Top"/>
+                <TextBox x:Name="txtDescription" 
+                         Width="500" 
+                         Height="100" 
+                         Background="#FF2D2D2D" 
+                         Foreground="White" 
+                         TextWrapping="Wrap" 
+                         AcceptsReturn="True" 
+                         VerticalScrollBarVisibility="Auto"/>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button x:Name="SaveButton" Content="Сохранить" Style="{StaticResource AdminActionButton}" Margin="0,0,10,0"/>
+            <Button x:Name="CancelButton" Content="Отмена" Style="{StaticResource AdminActionButton}"/>
+        </StackPanel>
+    </Grid>
+</Window>

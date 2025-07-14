@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <PathGeometry x:Key="ExitIcon" Figures="M10,20V14H3V10H10V4L17,12L10,20M19,19H15V21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3H15V5H19V19Z"/>
+</ResourceDictionary> 

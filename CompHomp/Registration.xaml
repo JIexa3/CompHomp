@@ -1,0 +1,68 @@
+﻿<Window x:Class="CompHomp.Registration"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CompHomp"
+        mc:Ignorable="d"
+        Title="Registration" Height="600" Width="400"
+        WindowStartupLocation="CenterScreen"
+        Background="#FF1A1A1A">
+    <Border Padding="20">
+        <ScrollViewer Style="{StaticResource CustomScrollViewer}"
+                 VerticalScrollBarVisibility="Auto">
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock Text="CompHomp"
+                        FontSize="24"
+                        FontWeight="Bold"
+                        Foreground="White"
+                        HorizontalAlignment="Center"
+                        Margin="0,0,0,30"/>
+
+                <TextBlock Text="Логин"
+                        Foreground="White"
+                        Margin="0,5"/>
+                <TextBox x:Name="LoginTextBox" Style="{StaticResource TextBoxStyle}"/>
+
+                <TextBlock Text="Email"
+                        Foreground="White"
+                        Margin="0,10,0,5"/>
+                <TextBox x:Name="EmailTextBox" Style="{StaticResource TextBoxStyle}"/>
+
+                <TextBlock Text="Пароль"
+                        Foreground="White"
+                        Margin="0,10,0,5"/>
+                <PasswordBox x:Name="PasswordBox" Style="{StaticResource PasswordBoxStyle}"/>
+
+                <TextBlock Text="Подтверждение пароля"
+                        Foreground="White"
+                        Margin="0,10,0,5"/>
+                <PasswordBox x:Name="ConfirmPasswordBox" Style="{StaticResource PasswordBoxStyle}"/>
+
+                <Button x:Name="RegisterButton"
+                     Content="Зарегистрироваться"
+                     Style="{StaticResource ButtonStyle}"
+                     Click="OnRegisterClick"
+                     Margin="0,20,0,0"/>
+
+                <StackPanel x:Name="VerificationPanel" Visibility="Collapsed">
+                    <TextBlock Text="Код подтверждения"
+                            Foreground="White"
+                            Margin="0,20,0,5"/>
+                    <TextBox x:Name="VerificationCodeTextBox" 
+                         Style="{StaticResource TextBoxStyle}"/>
+
+                    <Button Content="Подтвердить"
+                         Style="{StaticResource ButtonStyle}"
+                         Click="OnVerifyClick"
+                         Margin="0,10,0,0"/>
+                </StackPanel>
+
+                <Button Content="Вернуться к входу"
+                     Style="{StaticResource ButtonStyle}"
+                     Click="OnBackToLoginClick"
+                     Margin="0,20,0,0"/>
+            </StackPanel>
+        </ScrollViewer>
+    </Border>
+</Window>

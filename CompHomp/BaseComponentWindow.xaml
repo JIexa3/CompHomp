@@ -1,0 +1,23 @@
+<Window x:Class="CompHomp.BaseComponentWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Добавление/Редактирование компонента" 
+        Height="450" 
+        Width="400"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel x:Name="InputPanel" Grid.Row="0">
+            <!-- Динамические поля будут добавляться здесь -->
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="SaveButton" Content="Сохранить" Width="100" Margin="0,0,10,0" Click="SaveButton_Click"/>
+            <Button x:Name="CancelButton" Content="Отмена" Width="100" Click="CancelButton_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

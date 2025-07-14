@@ -1,0 +1,11 @@
+<Project>
+  <PropertyGroup>
+    <GenerateXamlFiles>true</GenerateXamlFiles>
+  </PropertyGroup>
+  <ItemGroup>
+    <Page Update="@(Page)">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,219 @@
+﻿<Window x:Class="CompHomp.ProfileWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:converters="clr-namespace:CompHomp.Converters"
+        Title="Профиль" Height="700" Width="900"
+        WindowStartupLocation="CenterOwner"
+        Background="#FF1E1E1E">
+
+    <Window.Resources>
+        <Style x:Key="ModernTextBox" TargetType="TextBox">
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="Background" Value="#FF2D2D2D"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="#FF3E3E3E"
+                                BorderThickness="1"
+                                CornerRadius="5">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ModernPasswordBox" TargetType="PasswordBox">
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="Background" Value="#FF2D2D2D"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="PasswordBox">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="#FF3E3E3E"
+                                BorderThickness="1"
+                                CornerRadius="5">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ModernButton" TargetType="Button">
+            <Setter Property="Background" Value="#FF0078D4"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FF1084D8"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#FF006CBD"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="HeaderText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Margin" Value="0,0,0,20"/>
+        </Style>
+
+        <Style x:Key="SubHeaderText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+        </Style>
+
+        <Style x:Key="LabelText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="#FFB4B4B4"/>
+            <Setter Property="Margin" Value="0,0,0,5"/>
+        </Style>
+
+        <converters:TotalPriceConverter x:Key="TotalPriceConverter"/>
+        <converters:BuildStatusConverter x:Key="StatusConverter"/>
+    </Window.Resources>
+
+    <Border Margin="20" CornerRadius="10" Background="#FF252525">
+        <Grid Margin="30">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Профиль пользователя -->
+            <StackPanel Grid.Row="0" Margin="0,0,0,30">
+                <TextBlock Text="Профиль пользователя"
+                          Style="{StaticResource HeaderText}"/>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="Логин" Style="{StaticResource LabelText}"/>
+                        <TextBox x:Name="NameTextBox"
+                                Style="{StaticResource ModernTextBox}"
+                                Margin="0,0,0,15"/>
+
+                        <TextBlock Text="Email" Style="{StaticResource LabelText}"/>
+                        <TextBox x:Name="EmailTextBox"
+                                Style="{StaticResource ModernTextBox}"
+                                Margin="0,0,0,15"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="Пароль" Style="{StaticResource LabelText}"/>
+                        <PasswordBox x:Name="PasswordBox"
+                                   Style="{StaticResource ModernPasswordBox}"
+                                   Margin="0,0,0,15"/>
+
+                        <Button Content="Сохранить изменения"
+                                Style="{StaticResource ModernButton}"
+                                Margin="0,20,0,0"
+                                Click="SaveButton_Click"/>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+
+            <!-- История заказов -->
+            <TextBlock Grid.Row="1"
+                       Text="История заказов"
+                       Style="{StaticResource SubHeaderText}"
+                       Margin="0,0,0,15"/>
+
+            <Border Grid.Row="2" 
+                    Background="#FF2D2D2D" 
+                    CornerRadius="5" 
+                    BorderBrush="#FF3E3E3E" 
+                    BorderThickness="1">
+                <DataGrid x:Name="OrdersGrid"
+                         AutoGenerateColumns="False"
+                         IsReadOnly="True"
+                         Background="Transparent"
+                         BorderThickness="0"
+                         RowBackground="Transparent"
+                         AlternatingRowBackground="#FF323232"
+                         GridLinesVisibility="Horizontal"
+                         HeadersVisibility="Column"
+                         SelectionChanged="OrdersGrid_SelectionChanged"
+                         RowHeight="40"
+                         VerticalScrollBarVisibility="Auto">
+                    <DataGrid.Resources>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="Foreground" Value="#FFB4B4B4"/>
+                            <Setter Property="Padding" Value="10,10"/>
+                            <Setter Property="FontWeight" Value="SemiBold"/>
+                        </Style>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Padding" Value="10,5"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="DataGridCell">
+                                        <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
+                                            <ContentPresenter/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </DataGrid.Resources>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="№ заказа" 
+                                          Binding="{Binding Id}" 
+                                          Width="100"/>
+                        <DataGridTextColumn Header="Дата" 
+                                          Binding="{Binding PurchaseDate, StringFormat={}{0:dd.MM.yyyy HH:mm}}" 
+                                          Width="Auto"/>
+                        <DataGridTextColumn Header="Статус" 
+                                          Binding="{Binding OrderStatus, Converter={StaticResource StatusConverter}}" 
+                                          Width="Auto"/>
+                        <DataGridTextColumn Header="Сумма" 
+                                          Binding="{Binding TotalAmount, StringFormat={}{0:N2} ₽}" 
+                                          Width="150"/>
+                        <DataGridTemplateColumn Header="Действия" Width="*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="Детали" 
+                                            Style="{StaticResource ModernButton}"
+                                            Tag="{Binding Id}"
+                                            Click="ViewOrderDetails_Click"
+                                            Margin="5,0"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Border>
+        </Grid>
+    </Border>
+</Window>
